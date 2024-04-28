@@ -2,6 +2,7 @@ import React, { SyntheticEvent } from "react";
 import "./Card.css";
 import { CompanySearch } from "../../company";
 import AddPortfolio from "../Portfolio/AddPortfolio/AddPortfolio";
+import { Link } from "react-router-dom";
 
 interface Props {
   data: CompanySearch;
@@ -13,22 +14,24 @@ const Card: React.FC<Props> = ({
   onPortfolioCreate,
 }: Props): JSX.Element => {
   return (
-    <div className="card">
-      <img src="" alt="Company-Logo" />
-      <div className="details">
-        <h2>
+    <>
+      <div className="flex flex-col items-center justify-between w-full p-6 bg-slate-100 rounded-lg md:flex-row">
+        <Link
+          to={`/company/${data.symbol}`}
+          className="font-bold text-center text-black md:text-left">
           {data.name}({data.symbol})
-        </h2>
-        <p>${data.currency}</p>
+        </Link>
+        <p className="text-black">${data.currency}</p>
+
+        <p className="font-bold text-black">
+          {data.exchangeShortName} - {data.stockExchange}
+        </p>
+        <AddPortfolio
+          onPortfolioCreate={onPortfolioCreate}
+          symbol={data.symbol}
+        />
       </div>
-      <p className="infor">
-        {data.exchangeShortName} - {data.stockExchange}
-      </p>
-      <AddPortfolio
-        onPortfolioCreate={onPortfolioCreate}
-        symbol={data.symbol}
-      />
-    </div>
+    </>
   );
 };
 export default Card;
