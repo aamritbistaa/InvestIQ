@@ -49,13 +49,16 @@ namespace api.Repository
                 stock = stock.Where(s => s.Symbol.Contains(query.Symbol));
             }
             if (!string.IsNullOrWhiteSpace(query.SortBy))
+            
             {
                 if (query.SortBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
                 {
                     stock = query.IsDescending ? stock.OrderByDescending(s => s.Symbol) : stock.OrderBy(s => s.Symbol);
                 }
             }
-            return await stock.ToListAsync();
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return await stock.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)
