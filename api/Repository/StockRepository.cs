@@ -8,7 +8,6 @@ using api.Helpers;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace api.Repository
 {
@@ -49,7 +48,7 @@ namespace api.Repository
                 stock = stock.Where(s => s.Symbol.Contains(query.Symbol));
             }
             if (!string.IsNullOrWhiteSpace(query.SortBy))
-            
+
             {
                 if (query.SortBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
                 {
