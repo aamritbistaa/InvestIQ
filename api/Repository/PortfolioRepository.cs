@@ -34,4 +34,17 @@ public class PortfolioRepository : IPortfolioRepository
             MarketCap = x.Stock.MarketCap,
         }).ToListAsync();
     }
+
+    public async Task<Portfolio> DeletePortfolio(AppUser appUser, string symbol)
+    {
+        var portfolio = await _context.Portfolios.FirstOrDefaultAsync(x => x.AppUserId == appUser.Id && x.Stock.Symbol.ToLower() == symbol.ToLower());
+        if (portfolio == null)
+        {
+            return null;
+        }
+
+        _context.Portfolios.Remove(portfolio);
+        await _context.SaveChangesAsync();
+        return portfolio;
+    }
 }
