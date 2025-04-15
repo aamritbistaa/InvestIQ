@@ -16,5 +16,7 @@ namespace api.Models
         public int? StockId { get; set; }
         //Navigation Property - allows us to Navigate within Stock Relation or access "Stock" model
         public Stock? Stock { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
